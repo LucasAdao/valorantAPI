@@ -1,0 +1,182 @@
+openapi: 3.0.3
+info:
+  title: "Valorant API"
+  version: 1.0.0
+  description: >-
+    Uma Api para cadastrar personagens do jogo valorant, nela você pode fazer operações básicas como Buscar agentes, deletar agentes, adicionar agentes e atualizar agentes! Está API tem como principal objetivo o treinamento da documentação Swagger.
+  contact:
+    email: "l.adao@outlook.com"
+  license:
+    name: dev.lucas
+    url: https://github.com/LucasAdao
+externalDocs:
+  description: Linkedin do Desenvolvedor
+  url: https://www.linkedin.com/in/l-ucas/
+servers:
+ - url: http://localhost:8080/api/valorant/agentes
+paths:
+  /agentes:
+    post:
+      tags:
+        - agente
+      summary: Adicionar Agente
+      description: Adiciona um novo Agente ao Banco de dados
+      requestBody:
+        description: Dados do agente
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/Agente'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Agente'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Agente'
+        required: true
+      responses:
+        '201':
+          description: Agente criado com Sucesso!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agente'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Agente'
+    get:
+      tags:
+      - agente
+      summary: Ver Agentes Cadastrados
+      description: Retorna todos os agentes cadastrados no banco.
+      responses:
+        '200':
+          description: Agentes buscados com Sucesso!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Agente'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Agente'
+  /agentes/{id}:
+    put:
+      tags:
+      - agente
+      summary: Alterar Dados do Agente
+      description: Altera os dados do Agente com base em seu ID.
+      operationId: Atualizar o Agente através de seu ID.
+      parameters:
+      - name: id
+        in: path
+        description: o ID do agente que você deseja alterar
+        required: true
+        schema:
+          type: integer 
+          format: int64
+      requestBody:
+          description: Dados do agente
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Agente'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Agente'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/Agente'
+      responses:
+        '200':
+          description: Agente alterado com sucesso!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agente'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Agente'
+        '404':
+          description: Agente não encontrado!
+    get:
+      tags:
+      - agente
+      summary: Procurar Agente por ID
+      description: Busca um Agente cadastrado por ID
+      operationId: Insira o id para buscar o agente
+      parameters:
+      - name: id
+        in: path
+        description: o ID do agente que você deseja buscar
+        required: true
+        schema:
+          type: integer 
+          format: int64
+      responses:
+        '200':
+          description: Agente encontrado!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agente'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Agente'
+        '404':
+          description: Agente não encontrado!
+    delete:
+      tags:
+      - agente
+      summary: Deletar Agente por ID
+      description: Deleta um Agente cadastrado por ID
+      operationId: Insira o id para deletar o agente
+      parameters:
+      - name: id
+        in: path
+        description: o ID do agente que você deseja deletar
+        required: true
+        schema:
+          type: integer 
+          format: int64
+      responses:
+        '200':
+          description: Agente deletado!
+        '404':
+          description: Agente não encontrado.
+        
+tags:
+  - name: agente
+    description: cadastrar,remover, ver e atualizar agentes.
+
+components:
+  schemas:
+    Agente:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nome:
+          type: string
+          example: "ISO"
+        classe:
+          type: string
+          enum:
+            - DUELISTA
+            - CONTROLADOR
+            - INICIADOR
+            - SENTINELA
+          example: DUELISTA
+        descricao:
+          type: string
+          example: "Iso é um mercenário chinês capaz de..."
+      required:
+       - nome
+       - classe
+       - descricao
+       
+            

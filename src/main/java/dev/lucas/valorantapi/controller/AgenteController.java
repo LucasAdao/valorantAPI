@@ -41,9 +41,8 @@ public class AgenteController {
     @DeleteMapping("/agentes/{id}")
     public ResponseEntity<?> deletarAgente(@PathVariable Long id){
         try {
-            Optional<Agente> agenteBuscado = agenteService.buscarAgentePorId(id);
             agenteService.deletarAgente(id);
-            return new ResponseEntity<>(agenteBuscado.get(), HttpStatus.OK);
+            return ResponseEntity.status(HttpStatus.OK).body(null);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
